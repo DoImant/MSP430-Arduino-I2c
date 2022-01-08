@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"name": "MSP430-Arduino-I2c",
+			"path": "MSP430-I2C-Slave"
+		},
+		{
+			"path": "Arduino-I2C-Master-Slave"
+		},
+		{
+			"name": "MSP430-Arduino-I2c",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
