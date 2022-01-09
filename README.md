@@ -17,4 +17,5 @@ This sample program continuously reads data from the SD16_A (ADC) and sends the 
 In order to save some memory space, the definition WITH_LED can be commented out. This deactivates the status LED functionality on PIN 1.0.
 
 ## Example circuit
+
 ![circuit](https://github.com/DoImant/Stuff/blob/main/MSP430-I2C/MP430-I2C-To-Pico.jpg)
