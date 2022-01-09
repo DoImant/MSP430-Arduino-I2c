@@ -44,11 +44,14 @@ void setup()
 
 void loop()
 {
+  static char outText[41];
+  static uint16_t adcValue = 0;
+  static double voltage = 0;
   int idx = 0;
   
   Wire.requestFrom(I2C_SLAVE_ADDRESS, NUMBER_OF_BYTES);   // request NUMBER_OF_BYTES byte
                                                           // from slave device I2C_SLAVE_ADDRESS
-  Serial.print("Received: ");
+  //Serial.print("Received: ");
   while(Wire.available())    // slave may send less than requested
   {
     if (idx < NUMBER_OF_BYTES) {
@@ -61,7 +64,10 @@ void loop()
 
 #if NUMBER_OF_BYTES == 2
   #ifdef UNSIGNED
-    Serial.println(bufferToInt16<uint16_t>(buffer));
+    adcValue = bufferToInt16<uint16_t>(buffer);
+    voltage = (0.6 / 65535) * adcValue;
+    sprintf(outText,"ADC-Value: %d -> Voltage: %1.3f V",adcValue, voltage);
+    Serial.println(outText);
   #else
     Serial.println(bufferToInt16<int16_t>(buffer));
   #endif
