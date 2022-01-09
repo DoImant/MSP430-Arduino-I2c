@@ -12,7 +12,7 @@ This directory contains an example program for an I2C master software that can r
 
 ## MSP430-I2C-Slave
 
-This sample program continuously reads data from the SD16_A (ADC) and sends the value from the register SD16MEM0 to the I2C master. The I2C implementation is located in the lib/ directory. There is a constant SLAVE_ADDR in the msp430-i2c.h file. The slave address is specified here. The address value must be shifted one bit to the left. For example, the address 0x24 corresponds to the value 0x48 in the slave configuration.
+The sample program continuously reads measured values from the SD16_a (ADC). Eleven measured values are read in and saved. The meridian is determined from this and sent to the master. The I2C implementation is located in the lib/msp430-i2c/ directory. There is a constant SLAVE_ADDR in the msp430-i2c.h file. The slave address is specified here and can of course be changed. 
 
 In order to save some memory space, the definition WITH_LED can be commented out. This deactivates the status LED functionality on PIN 1.0.
 
