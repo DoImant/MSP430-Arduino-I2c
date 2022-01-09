@@ -29,7 +29,7 @@
 /// Global definitions
 //////////////////////////////////////////////////////////////////////////////
 
-#define NUM_OF_ADCVALUES 12
+#define NUM_OF_ADCVALUES 11               // Value has to be odd
 
 //////////////////////////////////////////////////////////////////////////////
 /// Module global variables
@@ -130,12 +130,7 @@ uint16_t getMedian(uint16_t* data, uint8_t items)
     }
   }
   tmp = (items >> 1);                     // items/2
-#if (NUM_OF_ADCVALUES & 0x01)
+
   return data[tmp];                       // The result set is odd. Simply return 
                                           // the mean value of the set of values.
-#else 
-  return ((data[tmp] + data[tmp-1]) >>1); // The data list has an even number of elements. 
-                                          // Therefore calculate the mean value from the 
-                                          // two mean data values. Fractions are rounded off.
-#endif
 }
