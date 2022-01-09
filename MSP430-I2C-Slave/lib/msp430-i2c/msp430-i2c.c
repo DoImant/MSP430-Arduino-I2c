@@ -80,8 +80,7 @@ __interrupt void USI_TXRX (void)
 {
   static uint8_t i2cState;     
   static uint8_t dataIdx = 0;
-  if (USICTL1 & USISTTIFG)                // Start entry?
-  {
+  if (USICTL1 & USISTTIFG)  {             // Start entry?
 #ifdef WITH_LED
     P1OUT |= 0x01;                        // LED on: sequence start
 #endif
@@ -103,8 +102,7 @@ __interrupt void USI_TXRX (void)
         slvAddr++;                        // Save R/W bit
       }
       USICTL0 |= USIOE;                   // SDA = output
-      if (USISRL == slvAddr)              // Oh. Somebody wants something from me.
-      {
+      if (USISRL == slvAddr) {            // Oh. Somebody wants something from me.
         USISRL = 0x00;                    // Send Ack
 #ifdef WITH_LED
         P1OUT &= ~0x01;                   // LED off
@@ -136,8 +134,7 @@ __interrupt void USI_TXRX (void)
       break;
 
     case I2C_TX_CHECK:         // Process Data Ack/NAck
-      if (USISRL & 0x01)                  // If Nack received...
-      {                                   // NACK Received. 
+      if (USISRL & 0x01) {                // If Nack received...
         i2cState = prepStart();
         dataIdx=0;                        // Reset data index
       } else {                            // ... else Ack received

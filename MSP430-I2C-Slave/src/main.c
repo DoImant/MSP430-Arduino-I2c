@@ -53,8 +53,7 @@ uint16_t getMedian(uint16_t* data, uint8_t items);
 int main(void)
 {
   WDTCTL = WDTPW + WDTHOLD;               // Stop watchdog
-  if (CALBC1_1MHZ==0xFF)					        // If calibration constants erased
-  {											
+  if (CALBC1_1MHZ==0xFF)	{				        // If calibration constants erased											
     while(1);                             // do not load, trap CPU!!	
   }
 
@@ -76,9 +75,7 @@ int main(void)
     }                                     // AD conversion ended? 
     adcValues[idx] = SD16MEM0;            
     idx++;
-    if (idx == NUM_OF_ADCVALUES)          
-                                          
-    {
+    if (idx == NUM_OF_ADCVALUES) {
       median = getMedian(adcValues, NUM_OF_ADCVALUES); 
       __disable_interrupt();
       setTxData16(median);                // Update ADC value to I2C Databuffer
@@ -117,12 +114,9 @@ uint16_t getMedian(uint16_t* data, uint8_t items)
   uint16_t tmp;
   uint8_t i, j;
 
-  for (i = 0; i < items; ++i) 
-  {
-    for (j = 0; j < items - i - 1; ++j)
-    {
-      if (data[j] > data[j + 1])
-      {
+  for (i = 0; i < items; ++i) {
+    for (j = 0; j < items - i - 1; ++j) {
+      if (data[j] > data[j + 1]) {
         tmp = data[j];
         data[j] = data[j + 1];
         data[j + 1] = tmp;
@@ -130,7 +124,6 @@ uint16_t getMedian(uint16_t* data, uint8_t items)
     }
   }
   tmp = (items >> 1);                     // items/2
-
   return data[tmp];                       // The result set is odd. Simply return 
                                           // the mean value of the set of values.
 }
