@@ -67,7 +67,7 @@
 /// Module global variables
 //////////////////////////////////////////////////////////////////////////////
 //extern uint8_t slvData[NUMBER_OF_BYTES];
-uint8_t slvData[NUMBER_OF_BYTES] = {0,0,0,0}; 
+uint8_t slvData[NUMBER_OF_BYTES]; 
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -160,7 +160,6 @@ __interrupt void USI_TXRX (void)
 /// @brief Initialize this microcontroller as an I2C slave.
 /// 
 //////////////////////////////////////////////////////////////////////////////
-
 void i2cSlaveSetup(void){
   P1OUT = BIT6 | BIT7;                    // P1.6 & P1.7 OUT
   //P1REN |= BIT6 + BIT7                  // P1.6 & P1.7 Pullups
@@ -185,7 +184,6 @@ void i2cSlaveSetup(void){
 ///                   Attention: the index value will be inkremented!
 /// @return uint8_t   next I2C state  
 //////////////////////////////////////////////////////////////////////////////
-
 uint8_t txData(unsigned char* pIdx) {
   USICTL0 |= USIOE;                       // SDA = output
   USISRL = slvData[*pIdx];
@@ -194,9 +192,14 @@ uint8_t txData(unsigned char* pIdx) {
   return I2C_ACK_NACK;                    // next state: receive (N)Ack
 }
 
+//////////////////////////////////////////////////////////////////////////////
+/// @brief Reset I2C to Idle and wait for the next start 
+/// 
+/// @return uint8_t next I2C state 
+//////////////////////////////////////////////////////////////////////////////
 uint8_t prepStart(void) {
   USICTL0 &= ~USIOE;                      // SDA = input
-  slvAddr = SLAVE_ADDR;                   // Reset slave address
+  slvAddr = (SLAVE_ADDR << 1);            // Reset slave address
   return I2C_IDLE;
 }
 

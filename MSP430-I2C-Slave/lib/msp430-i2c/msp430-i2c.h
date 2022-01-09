@@ -11,8 +11,8 @@ extern "C" {
 /// Global Definitions
 //////////////////////////////////////////////////////////////////////////////
 
-#define SLAVE_ADDR  0x48U                   // Address is 0x24 << 1 for R/W
-#define NUMBER_OF_BYTES  4U                 // Number of Bytes for transfer data buffer
+#define SLAVE_ADDR  0x24                    // Slave-Address 
+#define NUMBER_OF_BYTES  4U                 // Bytes for transfer data buffer (2 or 4)
 #define WITH_LED
 
 typedef enum I2C_ModeEnum{                  // States for Statemachine
@@ -30,7 +30,8 @@ typedef enum I2C_ModeEnum{                  // States for Statemachine
 /// Global variables
 //////////////////////////////////////////////////////////////////////////////
 
-static uint8_t slvAddr = SLAVE_ADDR;        // Init Address of this slave        
+static uint8_t slvAddr = (SLAVE_ADDR << 1);        // Init Address of this slave 
+                                                   // 7 Bit Address is << 1 for R/W       
 
 //////////////////////////////////////////////////////////////////////////////
 /// Forward declaration(s)
