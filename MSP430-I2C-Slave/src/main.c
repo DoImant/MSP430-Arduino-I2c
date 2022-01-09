@@ -71,18 +71,17 @@ int main(void)
   sd16Setup();
   while(1) {
     SD16CCTL0 &= ~SD16IFG;                // clear ADC Interrupt Flag
-    SD16CCTL0 |= SD16SC;                  // AD Wandler starten
+    SD16CCTL0 |= SD16SC;                  // start ADC
     while (!(SD16CCTL0 & SD16IFG)) { 
-    }                                     // AD Wandlung fertig ?
-    adcValues[idx] = SD16MEM0;            // neuen Wert einsortieren - in
-                                          // das Array schreiben
+    }                                     // AD conversion ended? 
+    adcValues[idx] = SD16MEM0;            
     idx++;
-    if (idx == NUM_OF_ADCVALUES)          // die Werte stehen auf Platz 0
-                                          // bis numofvalues-1
+    if (idx == NUM_OF_ADCVALUES)          
+                                          
     {
-      median = getMedian(adcValues, NUM_OF_ADCVALUES); //Median finden
+      median = getMedian(adcValues, NUM_OF_ADCVALUES); 
       __disable_interrupt();
-      setTxData16(median);                // ADC Wert übertragen
+      setTxData16(median);                // Update ADC value to I2C Databuffer
       __enable_interrupt();
       __delay_cycles(25000);
       idx = 0;
