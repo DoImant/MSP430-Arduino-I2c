@@ -5,12 +5,9 @@
 			"path": "MSP430-I2C-Slave"
 		},
 		{
+		  "name": "Arduino-I2C-Master-Slave",
 			"path": "Arduino-I2C-Master-Slave"
 		},
-		{
-			"name": "MSP430-Arduino-I2c",
-			"path": "."
-		}
 	],
 	"settings": {}
 }
