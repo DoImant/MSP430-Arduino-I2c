@@ -21,10 +21,12 @@
 //////////////////////////////////////////////////////////////////////////////
 /// global variable(s)
 //////////////////////////////////////////////////////////////////////////////
-#if NUMBER_OF_BYTES == 2
+#if (NUMBER_OF_BYTES == 2)
   uint8_t buffer[NUMBER_OF_BYTES] = {0,0};
-#else
+#elif (NUMBER_OF_BYTES == 4)
   uint8_t buffer[NUMBER_OF_BYTES] = {0,0,0,0};
+#else
+  #error Incorrect value specified for NUMBER_OF_BYTES. Only the value 2 or 4 may be specified.
 #endif
 
 #ifndef IAM_SLAVE
