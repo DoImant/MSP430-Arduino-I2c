@@ -132,7 +132,8 @@ uint16_t getMedian(uint16_t* data, uint8_t items)
   }
   tmp = (items >> 1);                     // items/2
 #if (NUM_OF_ADCVALUES & 0x01)
-  return data[tmp];
+  return data[tmp];                       // The result set is odd. Simply return 
+                                          // the mean value of the set of values.
 #else 
   return ((data[tmp] + data[tmp-1]) >>1); // The data list has an even number of elements. 
                                           // Therefore calculate the mean value from the 
