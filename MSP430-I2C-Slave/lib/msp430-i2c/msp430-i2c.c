@@ -160,9 +160,6 @@ __interrupt void USI_TXRX (void)
 void i2cSlaveSetup(void){
   P1OUT = BIT6 | BIT7;                    // P1.6 & P1.7 OUT
   //P1REN |= BIT6 + BIT7                  // P1.6 & P1.7 Pullups
-  P1DIR = 0xFF;                           // Unused pins as outputs saves energy
-  P2OUT = 0;
-  P2DIR = 0xFF;
 
   USICTL0 |= USISWRST;                    // Do config -> Disable USI
   USICTL0 = USIPE6+USIPE7+USISWRST;       // Port & USI mode setup

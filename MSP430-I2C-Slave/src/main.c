@@ -56,11 +56,18 @@ int main(void)
   if (CALBC1_1MHZ==0xFF)	{				        // If calibration constants erased											
     while(1);                             // do not load, trap CPU!!	
   }
-
+  
   DCOCTL = 0;                             // Select lowest DCOx and MODx settings
   BCSCTL1 = CALBC1_1MHZ;                  // Set DCO
   DCOCTL = CALDCO_1MHZ;
-
+  BCSCTL1 = BIT7;                         // switch XT2 off
+  
+  // The specific pin configuration is done in the setup routines.
+  P1OUT = 0;                              // Unused pins as outputs saves energy
+  P1DIR = 0xFF;                           
+  P2OUT = 0;
+  P2DIR = BIT6 | BIT7;
+  
   uint16_t median;              
   uint16_t adcValues[NUM_OF_ADCVALUES];   // Array with the data for which 
                                           // the meriadian is to be found
@@ -93,13 +100,14 @@ int main(void)
 /// 
 //////////////////////////////////////////////////////////////////////////////
 void sd16Setup() {
-  SD16CTL = SD16REFON;      // Referenzvoltage µC, 1200 mV
-  SD16CTL |= SD16SSEL_1;    // Clk is SMCLK
-  SD16INCTL0 = SD16INCH_1;  // ADC-input via A1+; P1.2
-  SD16AE = SD16AE2;         // Input viar A1+; A1- internal GND
-  SD16CCTL0 = SD16UNI;      // Unipolar Input 0 up to 0xFFFF
-  SD16CCTL0 |= SD16SNGL;    // Single-Mode; 
-  SD16CCTL0 |= SD16DIV_0;
+  //             no division       | of SMCLK   | internal reference 1200mV
+  SD16CTL = SD16XDIV_0 | SD16DIV_0 | SD16SSEL_1 | SD16REFON;  
+  //          Unipolar| Single   | OSR = 256    
+  SD16CCTL0 = SD16UNI | SD16SNGL | SD16OSR_256; // No interrupts (SD16IE)
+  //           gain = 1   | ADC-in A1+ 
+  SD16INCTL0 = SD16GAIN_1 | SD16INCH_1;         // No interrupt and stop (SD16INTDLY_X)
+  SD16AE = SD16AE2;           // Connect A1- to internal GND
+  P1SEL = BIT3;               // Enable VRef to external capacitor
 }
 
 //////////////////////////////////////////////////////////////////////////////
