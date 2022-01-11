@@ -9,5 +9,16 @@
 			"path": "Arduino-I2C-Master-Slave"
 		},
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"*.pio": "platformio-debug.asm",
+			"*.json": "jsonc",
+			"*.hex": "hexdump",
+			"msp430.h": "c",
+			"msp430f2111.h": "c",
+			"msp430f2121.h": "c",
+			"msp430f2101.h": "c",
+			"msp430f2013.h": "c"
+		}
+	}
 }
