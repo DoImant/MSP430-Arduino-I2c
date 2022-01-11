@@ -66,7 +66,7 @@ void loop()
   #ifdef UNSIGNED
     adcValue = bufferToInt16<uint16_t>(buffer);
     voltage = (0.6 / 65535) * adcValue;
-    sprintf(outText,"ADC-Value: %d -> Voltage: %1.3f V",adcValue, voltage);
+    sprintf(outText,"ADC-Value: %d -> Voltage: %1.4f V",adcValue, voltage);
     Serial.println(outText);
   #else
     Serial.println(bufferToInt16<int16_t>(buffer));
