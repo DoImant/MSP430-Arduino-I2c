@@ -44,9 +44,10 @@ void setup()
 
 void loop()
 {
-  static char outText[41];
+  static char outText[61];
   static uint16_t adcValue = 0;
   static double voltage = 0;
+  static double batVoltage = 0;
   int idx = 0;
   
   Wire.requestFrom(I2C_SLAVE_ADDRESS, NUMBER_OF_BYTES);   // request NUMBER_OF_BYTES byte
@@ -66,7 +67,8 @@ void loop()
   #ifdef UNSIGNED
     adcValue = bufferToInt16<uint16_t>(buffer);
     voltage = (0.6 / 65535) * adcValue;
-    sprintf(outText,"ADC-Value: %d -> Voltage: %1.4f V",adcValue, voltage);
+    batVoltage = voltage * 3.25 / 0.6;
+    sprintf(outText,"ADC-Value: %d -> Voltage: %1.4f V Battery: %1.3f V",adcValue, voltage, batVoltage);
     Serial.println(outText);
   #else
     Serial.println(bufferToInt16<int16_t>(buffer));
